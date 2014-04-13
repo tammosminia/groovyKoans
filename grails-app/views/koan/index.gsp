@@ -7,14 +7,17 @@
 <body>
 
 <h2>Available koans</h2>
-<table>
-    <g:each in="${koans}" var="koanNumber">
-        <tr>
-            <td>
-                <g:link action="view" id="${koanNumber}">${koanNumber}</g:link>
-            </td>
-        </tr>
+<ul>
+    <g:each in="${chapters}" var="chapter">
+        <li>
+            ${chapter.name}<br/>
+        <ul>
+            <g:each in="${chapter.koans}" var="koan">
+                <li><g:link action="view" id="${koan.id}">${koan.name}</g:link></li>
+            </g:each>
+        </ul>
+        </li>
     </g:each>
-</table>
+</ul>
 </body>
 </html>

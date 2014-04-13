@@ -9,6 +9,14 @@
 <g:link action="index">list</g:link>
 <hr/>
 
+<pre>${koan.explanation}</pre>
+
+<g:form action="view" id="${koan.id}">
+    <g:textArea name="code" value="${code}" rows="20" cols="100"/>
+    <hr/>
+    <g:submitButton name="try"/>
+</g:form>
+
 <g:if test="${success}">
     Success!<br/>
 </g:if>
@@ -26,15 +34,11 @@
     Failure!<br/>
     ${message}
 </g:elseif>
-<g:else>
-    Good luck!<br/>
-</g:else>
 
-<g:form action="view" id="${id}">
-    <g:textArea name="koan" value="${koan}" rows="20" cols="100"/>
-    <hr/>
-    <g:submitButton name="try"/>
-</g:form>
+<p>
+    <h2>output:</h2>
+    <pre>${output}</pre>
+</p>
 
 </body>
 </html>

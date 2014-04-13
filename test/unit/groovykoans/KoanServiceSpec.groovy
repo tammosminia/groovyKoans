@@ -42,37 +42,14 @@ class KoanServiceSpec extends Specification {
         result.exception.message == 'oh nee. alles gaat mis!'
     }
 
-    void "listKoans"() {
-        when:
-        def koans = service.listKoans()
-
-        then:
-        koans.size() == 2
-        koans[0] == '1-1'
-    }
-
-    void "getKoan - 1-1"() {
-        when:
-        String koan = service.getKoan('1-1')
-
-        then:
-        koan.length() > 50
-        koan.contains 'hello'
-    }
-
-    @Unroll
-    void "run all koans #koanNumber"() {
-        given:
-        def koan = service.getKoan(koanNumber)
+    void "runKoan - println"() {
+        def koan = /println 'lalala'/
 
         when:
         def result = service.runKoan(koan)
 
         then:
-        !result.success
-
-        where:
-        koanNumber << service.listKoans()
+        result.success
+        result.output == 'lalala\n'
     }
-
 }

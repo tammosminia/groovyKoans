@@ -1,28 +1,40 @@
 package groovykoans
 
+import groovyKoans.Chapter
+import groovyKoans.Koan
+
 class KoanController {
     def koanService
+    def createKoansService
+
+    private reload() {
+        Chapter.list()*.delete()
+        createKoansService.createAll()
+    }
 
     def index() {
+        reload()
         [
-                koans: koanService.listKoans()
+                chapters: Chapter.list()
         ]
     }
 
-    def view(String id, String koan) {
-        if(koan) {
-            def result = koanService.runKoan(koan)
+    def view(String id, String code) {
+        if(code) {
+            def result = koanService.runKoan(code)
             [
-                    id: id,
-                    koan: koan,
+                    koan: Koan.get(id),
+                    code: code,
                     success: result.success,
                     exception: result.exception,
-                    message: result.message
+                    message: result.message,
+                    output: result.output
             ]
         } else {
+            def koan = Koan.get(id)
             [
-                    id: id,
-                    koan: koanService.getKoan(id)
+                    koan: koan,
+                    code: koan.code
             ]
         }
     }
