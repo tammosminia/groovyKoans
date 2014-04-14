@@ -19,11 +19,12 @@ class KoanController {
         ]
     }
 
-    def view(String id, String code) {
-        if(code) {
-            def result = koanService.runKoan(code)
+    def view(int id, String code) {
+        def koan = Koan.get(id)
+        if(request.post) {
+            def result = koanService.runKoan("${koan.preCode ?: ''}\n$code\n${koan.postCode ?: ''}")
             [
-                    koan: Koan.get(id),
+                    koan: koan,
                     code: code,
                     success: result.success,
                     exception: result.exception,
@@ -31,11 +32,15 @@ class KoanController {
                     output: result.output
             ]
         } else {
-            def koan = Koan.get(id)
             [
                     koan: koan,
                     code: koan.code
             ]
         }
+    }
+
+    def next(int id) {
+        def nextId = id + 1
+        redirect(action: 'view', id: nextId)
     }
 }
