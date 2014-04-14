@@ -17,6 +17,7 @@ assert assertion, "We start easy. No need to change anything :)"/
 assert assertion, "Change false into true to pass."/
             )
         ]).save(failOnError: true)
+        
 
         new Chapter(name: 'Booleans', koans: [
             new Koan(name: 'Comparing booleans',
@@ -46,6 +47,7 @@ assert minus, 'negative integers are truthy'
 assert zero, '0 Is not truthy'/
             )
         ]).save(failOnError: true)
+        
 
         new Chapter(name: 'Java', koans: [
                 new Koan(name: 'Java beans',
@@ -100,6 +102,65 @@ assert dries.lastName == 'Roelvink'
                 ),
         ]).save(failOnError: true)
 
+
+        new Chapter(name: 'Dynamic typing', koans: [
+            new Koan(name: 'def',
+                    explanation: 'It is not necessary to specify the type of variables. You can use the keyword def. \nNote that it may still be usefull to specify the type anyway, to improve readability.',
+                    code: /def variable1 = true
+variable1 = 'The answer to everything'                    
+assert variable1 == 42, 'variable1 has no type, so it may be anything'
+assert variable2 == 'enlightenment', 'Define a new variable'/
+            ),
+            new Koan(name: 'Runtime typing',
+                    explanation: 'Objects do have a type at runtime.',
+                    code: /def variable1 = true
+def variable2
+variable1 = 'The answer to everything'                    
+assert variable1.class.name == 'java.lang.Integer', 'Give variable1 the correct type'
+assert variable2 instanceof String, 'Give variable2 the correct type'/
+            ),
+            new Koan(name: 'Calling a method on a dynamic variable',
+                    explanation: 'Objects do have a type at runtime.',
+                    code: '''def variable = 'fortytwo'
+try {
+   variable.length()  // Invalid method for Boolean type.
+   assert false, 'When you change the type of the variable, the previous statement will throw an exception'
+} catch (RuntimeException e) {
+   assert true, /The code compiles and runs, but throws an exception when it tries to call a method that doesn't exist on this type/
+}'''
+            ),
+        ]).save(failOnError: true)
+
+        
+        new Chapter(name: 'Methods', koans: [
+            new Koan(name: 'No return',
+                    explanation: 'A method returns the value of the last statement. No need to explicitly use the return keyword',
+                    code: /int plus(int i1, int i2) {
+	i1 - i2
+}
+
+assert plus(1, 2) == 3, 'Improve the plus method'/
+            ),
+            new Koan(name: 'Dynamic return type',
+                    explanation: 'A method returns the value of the last statement. No need to explicitly use the return keyword',
+                    code: '''def fuzzyPlus(int i1, int i2) {
+	i1 + i2
+}
+
+assert fuzzyPlus(1, 2) == 3, "Don't break this"
+assert fuzzyPlus(100, 1) == 'too much', 'Improve the fuzzyPlus method by using an if/else statement'
+'''
+            ),
+        ]).save(failOnError: true)
+
+        
+        new Chapter(name: 'Strings', koans: [
+            new Koan(name: 'Many ways to quote',
+                    explanation: '',
+                    code: /boolean predicate2 = true
+assert predicate2 == false/
+            ),
+        ]).save(failOnError: true)
 
     }
 }

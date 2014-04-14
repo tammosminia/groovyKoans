@@ -2,6 +2,9 @@
 <html>
 <head>
     <title></title>
+    <g:javascript src="codemirror-4.0/codemirror.js"/>
+    <g:javascript src="codemirror-4.0/mode/groovy/groovy.js"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'codemirror.css')}" type="text/css">
 </head>
 
 <body>
@@ -12,7 +15,8 @@
 <pre>${koan.explanation}</pre>
 
 <g:form action="view" id="${koan.id}">
-    <g:textArea name="code" value="${code}" rows="20" cols="100"/>
+    <g:textArea name="code" value="${code}"/>
+    %{--<div id="code"/>--}%
     <hr/>
     <g:submitButton name="try"/>
 </g:form>
@@ -40,5 +44,10 @@
     <pre>${output}</pre>
 </p>
 
+<r:script>
+    var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {lineNumbers: 'true'});
+</r:script>
+<r:layoutResources disposition="defer"/>
 </body>
+
 </html>
