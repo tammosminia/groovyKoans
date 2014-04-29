@@ -144,7 +144,7 @@ assert variable2 instanceof String, 'Give variable2 the correct type'/
                     postCode: /assert plus(1, 2) == 3, 'Improve the plus method'/
             ),
             new Koan(name: 'Dynamic return type',
-                    explanation: 'A method returns the value of the last statement. No need to explicitly use the return keyword',
+                    explanation: 'Using the keyword def, we can return any type',
                     code: /def fuzzyPlus(int i1, int i2) {
 	i1 + i2
 }/,
@@ -156,10 +156,33 @@ assert fuzzyPlus(100, 1) == 'too much', 'Improve the fuzzyPlus method by using a
 
         
         new Chapter(name: 'Strings', koans: [
-            new Koan(name: 'Many ways to quote',
-                    explanation: '',
-                    code: /boolean predicate2 = true
-assert predicate2 == false/
+            new Koan(name: /Many ways to quote a 'String'/,
+                    explanation: "Using the ' or \" quotes, you can escape certain characters using \\ ",
+                    code: /String s = 'Leerdammerkaas, carpaccio, wat een combinatio'/,
+                    postCode: /assert s.contains '\\n' /
+            ),
+            new Koan(name: 'Many ways to quote a /String/',
+                    explanation: "You can also use /. An extra advantage of having multiple ways to quote strings is that you don't always need to escape quotes used in your string ",
+                    code: /String s1, s2, s3/,
+                    postCode: '''assert s1.contains /'/
+assert s2.contains '"'
+assert s3.contains '/'
+'''
+            ),
+            new Koan(name: /GString/,
+                    explanation: /When you use " quotes, you can embed expressions in your code using ${expression}/,
+                    code: /String name = 'Zanger Rinus'
+String greeting/,
+                    postCode: /assert greeting == 'Hello Zanger Rinus'/
+            ),
+            new Koan(name: /Multiline strings/,
+                    explanation: "Using 3 ' quotes, your string may span multiple lines",
+                    code: /String s = '''Het is tijd, de hoogste tijd,
+u wordt bedankt voor weer 'n avond gezelligheid,
+dag mevrouw en dag meneer,
+u komt hier toch weer.
+'''/,
+                    postCode: /assert s.count('\\n') == 6 /
             ),
         ]).save(failOnError: true)
 
