@@ -170,7 +170,7 @@ assert s3.contains '/'
 '''
             ),
             new Koan(name: /GString/,
-                    explanation: /When you use " quotes, you can embed expressions in your code using ${expression}/,
+                    explanation: '''When you use " quotes, you can embed expressions in your code using ${expression}''',
                     code: /String name = 'Zanger Rinus'
 String greeting/,
                     postCode: /assert greeting == 'Hello Zanger Rinus'/
@@ -184,6 +184,26 @@ u komt hier toch weer.
 '''/,
                     postCode: /assert s.count('\\n') == 6 /
             ),
+        ]).save(failOnError: true)
+
+        new Chapter(name: 'Closures', koans: [
+                new Koan(name: /Many ways to quote a 'String'/,
+                        explanation: /Closures look a lot like methods, because we can pass parameters and we get a return value. But closures are anonymous. A closure is a piece of code that can be assigned to a variable. Later we can execute the code. Since Java 8 Java has lambda expressions which look a lot like Groovy closures./,
+                        code: '''Closure hello = { String name -> println "Hello $name" }
+hello('Frans')
+Closure plusOne = { int i -> i }
+Closure plus = { i1, i2 -> i1 * i2 }''',
+                        postCode: /assert plusOne(1) == 2
+assert plus(1, 2) == 3/
+                ),
+                new Koan(name: /it parameter in closures/,
+                        explanation: "If you don't define explicit parameters, you get an implicit parameter called 'it'",
+                        code: '''Closure hello = { println "Hello $it" }
+hello('Dries')
+Closure plusOne = { 5 }''',
+                        postCode: /assert plusOne(1) == 2
+assert plusOne('Marco') == 'Marco1/
+                ),
         ]).save(failOnError: true)
 
     }
