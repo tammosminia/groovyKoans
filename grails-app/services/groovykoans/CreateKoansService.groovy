@@ -186,8 +186,9 @@ u komt hier toch weer.
             ),
         ]).save(failOnError: true)
 
+
         new Chapter(name: 'Closures', koans: [
-                new Koan(name: /Many ways to quote a 'String'/,
+                new Koan(name: /Closures/,
                         explanation: /Closures look a lot like methods, because we can pass parameters and we get a return value. But closures are anonymous. A closure is a piece of code that can be assigned to a variable. Later we can execute the code. Since Java 8 Java has lambda expressions which look a lot like Groovy closures./,
                         code: '''Closure hello = { String name -> println "Hello $name" }
 hello('Frans')
@@ -195,6 +196,17 @@ Closure plusOne = { int i -> i }
 Closure plus = { i1, i2 -> i1 * i2 }''',
                         postCode: /assert plusOne(1) == 2
 assert plus(1, 2) == 3/
+                ),
+                new Koan(name: /Closures.call()/,
+                        explanation: /We can call a closure just like a method, or invoke the call method./,
+                        code: /def plusOne/,
+                        postCode: /assert plusOne(1) == 2
+assert plusOne.call(5) == 6/
+                ),
+                new Koan(name: /Closure without arguments/,
+                        explanation: /A closure does not need to have arguments./,
+                        code: /def noArg = { 'Closure without arguments.' }/,
+                        postCode: /assert noArg() == 'Sieneke'/
                 ),
                 new Koan(name: /it parameter in closures/,
                         explanation: "If you don't define explicit parameters, you get an implicit parameter called 'it'",
@@ -204,7 +216,53 @@ Closure plusOne = { 5 }''',
                         postCode: /assert plusOne(1) == 2
 assert plusOne('Marco') == 'Marco1/
                 ),
+                new Koan(name: /Closure as method parameter/,
+                        explanation: /Because a closure is a variable we can use it as a method parameter./,
+                        preCode: /Closure closure = { 2 }/,
+                        code: /def timesThree/,
+                        postCode: /assert timesThree(closure) == 6
+timesThree({ println 'shalalalie'})/
+                ),
+                new Koan(name: /Closure as last method parameter/,
+                        explanation: /Groovy has syntactic sugar. You can put the closure outside the argument list if it's the last argument/,
+                        code: /def times/,
+                        postCode: /times(2) { println 'shalalala'}
+times 3 { println 'shalalalie'}/
+                ),
         ]).save(failOnError: true)
+
+
+        new Chapter(name: 'Lists', koans: [
+                new Koan(name: 'Defining lists',
+                        explanation: 'Defining a list is very easy',
+                        preCode: /def empty = []
+List<String> singers = ['Frans Bauer', 'Zanger Rinus']/,
+                        code: /List numbers/,
+                        postCode: /assert numbers.size() == 3, 'Define a list with three numbers'/
+                ),
+                new Koan(name: 'Adding items',
+                        explanation: 'You can add items with the leftShift operator',
+                        preCode: /def singers = ['Frans Bauer', 'Zanger Rinus']/,
+                        code: /singers << 'Jantje Smit'/,
+                        postCode: /assert singers.size() == 5, 'Add two more great singers'/
+                ),
+                new Koan(name: 'accessing list items by index',
+                        explanation: 'You can use a negative index to read from last to first',
+                        code: /def numbers'/,
+                        postCode: /assert numbers[1] == 3
+assert numbers[4] == 7
+assert numbers[-1] == 7/
+                ),
+                new Koan(name: 'Adding lists',
+                        explanation: 'You can add or subtract lists using the + and - operator',
+                        code: /def list1 = []
+def list2 = []/,
+                        postCode: /assert list1 - list2 == [1, 2]
+assert list1 + list2 == [1, 2, 3, 4]/
+                ),
+        ]).save(failOnError: true)
+
+
 
     }
 }
