@@ -263,6 +263,67 @@ assert list1 + list2 == [1, 2, 3, 4]/
         ]).save(failOnError: true)
 
 
+        new Chapter(name: 'Maps', koans: [
+                new Koan(name: 'Defining maps',
+                        explanation: '',
+                        preCode: /def emptyMap = [:]
+Map numbers = [one: 1, 'two':2, (three):3]/,
+                        postCode: /assert rhymeWords.size() == 3, 'Define a map with three rhymeWords'
+assert rhymeWords['empty'] == 'spaghetti'/
+                ),
+                new Koan(name: 'Getting/setting map values with get/put',
+                        explanation: /Get normally returns null if the key doesn't exist./,
+                        preCode: /Man numbers = [1: 'one']/,
+                        code: /numbers.put(2, 'two')/,
+                        postCode: /assert numbers.get(3) == 'three'/
+                ),
+                new Koan(name: 'Getting/setting map values with bracket or dot notation',
+                        explanation: /Get normally returns null if the key doesn't exist./,
+                        preCode: /Man numbers = [one: 1]/,
+                        code: /numbers['two'] = 2
+numbers.three = 3/,
+                        postCode: /assert numbers['four'] == 4
+assert numbers.five == 5/
+                ),
+        ]).save(failOnError: true)
+
+
+        new Chapter(name: 'Collection methods', koans: [
+                new Koan(name: 'Each',
+                        explanation: 'Groovy adds a lot of extra methods to the Collection API classes. Each loops through all elements',
+                        preCode: /def list = [1, 2, 3]/,
+                        code: /list.each {
+    println it
+    assert it != 4
+}/,
+                ),
+                new Koan(name: 'collect',
+                        explanation: /With collect you can transform all items in a list./,
+                        preCode: /List singers = ['Frans', 'Andre', 'De Havenzangers']/,
+                        code: /List stringLengths/,
+                        postCode: /assert stringLengths == [5, 5, 15]/
+                ),
+                new Koan(name: 'shorter collect notation',
+                        explanation: /There is a shorthand for collect./,
+                        preCode: /List singers = ['Frans', 'Andre', 'De Havenzangers']
+List stringLengths = list*.length()/,
+                        code: /assert stringLengths = 'What is this?'/,
+                ),
+                new Koan(name: 'findAll',
+                        explanation: /With findAll you can filter out elements./,
+                        code: /List singers/,
+                        postCode: /assert singers.size() == 2
+assert singers.collect { it.length > 5 } == 1/
+                ),
+                new Koan(name: 'find',
+                        explanation: /find just returns the first matching item./,
+                        preCode: /List singers = ['Rex Gildo', 'Frans', 'Andre', 'De Havenzangers']/,
+                        code: /def firstSingerWithAFiveLetterName = singers.find { false } /,
+                        postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/
+                ),
+        ]).save(failOnError: true)
+
+
 
     }
 }
