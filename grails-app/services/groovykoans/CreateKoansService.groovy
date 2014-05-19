@@ -5,7 +5,7 @@ import groovyKoans.Koan
 
 class CreateKoansService {
     def createAll() {
-        new Chapter(name: 'Start', koans: [
+        new Chapter(name: 'Introduction', koans: [
             new Koan(name: 'The first one is free',
                     explanation: /For every koan you'll get an explanation that will enable you to complete it.
 You must edit the code so the assertions will be true. To guide you in the right path, only the code where you'll need to make the change is editable.
@@ -17,6 +17,11 @@ When you think you're done press 'try' to evaluate it./,
                     explanation: /You can use println to get output/,
                     code: /println 'Very useful to try things out'/,
                     postCode: /assert true, "Continue when you're done printing"/
+            ),
+            new Koan(name: 'documentation',
+                    explanation: /You can click on the links to read more documentation/,
+                    links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
+                    postCode: /assert true, "Continue when you've clicked at a documentation link"/
             ),
             new Koan(name: 'Change false to true',
                     explanation: /From here on the assertions will start out false. Now it's up to you to pass the tests/,
@@ -51,7 +56,29 @@ int zero = 0/,
                     postCode: /assert one, "positive integers are truthy"
 assert minus, "negative integers are truthy"
 assert zero, "0 Is not truthy"/
-            )
+            ),
+            new Koan(name: '? operator',
+                    explanation: 'You can use the ? operator as shorthand for an if/else construction',
+                    preCode: /assert (true ? 1 : 2) == 1
+assert (false ? 1 : 2) == 2/,
+                    code: /def isGerman/,
+                    postCode: /assert (isGerman ? 'Rex Gildo' : 'Andre Hazes') == 'Rex Gildo'/
+            ),
+            new Koan(name: 'Elvis operator',
+                    explanation: /The Elvis operator returns the condition if it's truthy, otherwise the righthand expression./,
+                    preCode: /assert 1 ?: 2 == 1
+assert 0 ?: 2 == 2/,
+                    code: /def name/,
+                    postCode: /assert name ?: 'Frans Bauer' == 'Rex Gildo'/
+            ),
+            new Koan(name: 'nullsafe ? operator',
+                    explanation: /With the ? operator, the next method is not evaluated if the lefthand object is null, instead it will return null./,
+                    preCode: /Map map = [a: 1]
+assert map.a?.toString() == '1'
+assert map.b?.toString() == null/,
+                    code: /def key = 'a'/,
+                    postCode: /assert map[key]?.toString() == null/
+            ),
         ]).save(failOnError: true)
         
 

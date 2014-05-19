@@ -7,6 +7,7 @@ class Koan {
     String preCode
     String code
     String postCode
+    static hasMany = [links: String]
 
     static constraints = {
         name(nullable: false, blank: false, maxSize: 100)
@@ -15,4 +16,5 @@ class Koan {
         code(nullable: true, blank: true, maxSize: 10000)
         postCode(nullable: true, blank: true, maxSize: 10000)
     }
+
 }

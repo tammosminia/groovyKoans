@@ -1,0 +1,15 @@
+/*
+codemirror.css comes with codemirror.
+This adds specific styling for groovyKoans
+*/
+
+.codeBlock {border: 1px solid black}
+.CodeMirror {
+    border: 1px solid lightgrey;
+    height: auto;
+}
+.CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+    height: auto;
+}

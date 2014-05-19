@@ -1,6 +1,7 @@
 package groovykoans
 
 import grails.test.mixin.TestFor
+import groovyKoans.Koan
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -51,5 +52,17 @@ class KoanServiceSpec extends Specification {
         then:
         result.success
         result.output == 'lalala\n'
+    }
+
+    void "addlinks"() {
+        when:
+        def koan = new Koan(name: 'documentation',
+                explanation: /You can click on the links to read more documentation/,
+                links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
+                postCode: /assert true, "Continue when you've clicked at a documentation link"/
+        )
+        then:
+
+        koan.links.size() == 1
     }
 }
