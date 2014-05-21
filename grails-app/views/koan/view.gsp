@@ -18,7 +18,7 @@
 
     <div class="links col-xs-4">
         <ul>
-            <g:each in="${koan.links}" var="link">
+            <g:each in="${koan.chapter.links}" var="link">
                 <li><g:link url="${link}">${link}</g:link></li>
             </g:each>
         </ul>
@@ -26,7 +26,7 @@
 </div>
 
 <br/>
-<g:form action="view" id="${koan.id}">
+<g:form action="view" params="[number: koan.number]">
     <div class="codeBlock">
         <g:textArea name="preCode" value="${koan.preCode}" readonly="readonly"/>
         <g:textArea name="code" value="${code}"/>
@@ -46,7 +46,7 @@
 
     <g:if test="${success}">
         Success!<br/>
-        <g:link action="next" id="${koan.id}">next</g:link>
+        <g:link action="next" params="[number: koan.number]">next</g:link>
     </g:if>
     <g:elseif test="${exception}">
         Exception caught! ${exception.class.name}<br/>

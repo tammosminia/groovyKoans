@@ -4,38 +4,61 @@ import groovyKoans.Chapter
 import groovyKoans.Koan
 
 class CreateKoansService {
-    def createAll() {
-        new Chapter(name: 'Introduction', koans: [
-            new Koan(name: 'The first one is free',
-                    explanation: /For every koan you'll get an explanation that will enable you to complete it.
-You must edit the code so the assertions will be true. To guide you in the right path, only the code where you'll need to make the change is editable.
-When you think you're done press 'try' to evaluate it./,
-                    code: /boolean assertion = true/,
-                    postCode: /assert assertion, "We start easy. No need to change anything :)"/
+    void reload() {
+        Chapter.list()*.delete()
+        createAll()
+    }
+
+    void createAll() {
+        int numberOfChapters = 0
+        int numberOfKoans = 0
+        def addChapter = { Chapter chapter ->
+            chapter.number = numberOfChapters++
+            chapter.koans.each {
+                it.number = numberOfKoans++
+                it.chapter = chapter
+            }
+            chapter.save(failOnError: true)
+        }
+
+        addChapter(new Chapter(name: 'Introduction',
+                links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
+                koans: [
+            new Koan(name: 'Introduction',
+                    explanation: /We'll start with a few introductory tests to get you familiar with the form.
+Each assignment has a short explanation. (this block)/,
+                    code: '''//And some code. (this block)
+//Press the play button beneath. It will tell you this code runs successfully and you can go on with the next test.''',
+            ),
+            new Koan(name: 'Code block',
+                    explanation: /The code block is made up of three parts. You can only edit the middle part. This is to guide you in the right direction/,
+                    preCode: /String s = 'You cannot edit the first part'/,
+                    code: /String s2 = 'You can edit the middle part'/,
+                    postCode: /assert true, 'The last part usually contains assertions.'/
             ),
             new Koan(name: 'println',
-                    explanation: /You can use println to get output/,
+                    explanation: /You can use println to get output./,
                     code: /println 'Very useful to try things out'/,
-                    postCode: /assert true, "Continue when you're done printing"/
             ),
             new Koan(name: 'documentation',
                     explanation: /You can click on the links to read more documentation/,
-                    links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
                     postCode: /assert true, "Continue when you've clicked at a documentation link"/
             ),
             new Koan(name: 'Change false to true',
                     explanation: /From here on the assertions will start out false. Now it's up to you to pass the tests/,
-                    preCode: /boolean assertion = false/,
-                    postCode: /assert assertion, "Change false into true to pass."/
+                    code: /boolean groovy = false/,
+                    postCode: /assert groovy, "Change the value of groovy to true to pass."/
             )
-        ]).save(failOnError: true)
-        
+        ]))
 
-        new Chapter(name: 'Booleans', koans: [
+
+        addChapter(new Chapter(name: 'Booleans',
+                links: ['http://groovy.codehaus.org/Groovy+Truth'],
+                koans: [
             new Koan(name: 'Comparing booleans',
                     explanation: '',
-                    preCode: /boolean predicate2 = true/,
-                    postCode: /assert predicate2 == false/
+                    preCode: /boolean predicate = true/,
+                    postCode: /assert predicate == false/
             ),
             new Koan(name: 'Collections as booleans',
                     explanation: 'Empty collections evaluate to false',
@@ -44,49 +67,42 @@ When you think you're done press 'try' to evaluate it./,
             ),
             new Koan(name: 'String truth',
                     explanation: 'Quite intuitively, empty (or null) strings are false.',
-                    code: "String s1\nString s2 = ''",
+                    code: /String s1
+String s2 = ''/,
                     postCode: /assert s1, "Null is not truthy"
 assert s2, "An empty string is not truthy"/
             ),
             new Koan(name: 'Numerical truth',
                     explanation: 'Similar to C code, null or zeros are false. Any other number is true.',
-                    code: /int one = 1
-int minus = -1
-int zero = 0/,
-                    postCode: /assert one, "positive integers are truthy"
-assert minus, "negative integers are truthy"
-assert zero, "0 Is not truthy"/
+                    code: /int i1 = 1
+int i2 = -1
+int i3 = 0/,
+                    postCode: /assert i1, "positive integers are truthy"
+assert i2, "negative integers are truthy"
+assert i3, "0 Is not truthy"/
             ),
-            new Koan(name: '? operator',
-                    explanation: 'You can use the ? operator as shorthand for an if/else construction',
-                    preCode: /assert (true ? 1 : 2) == 1
-assert (false ? 1 : 2) == 2/,
-                    code: /def isGerman/,
-                    postCode: /assert (isGerman ? 'Rex Gildo' : 'Andre Hazes') == 'Rex Gildo'/
+            new Koan(name: 'truth',
+                    explanation: 'Assign some truthy and some falsy values.',
+                    code: /List truthy
+List falsy/,
+                    postCode: '''//Don't worry. We'll explain how the code beneath works later.
+assert truthy.toSet().size() > 2, "Assign 3 different truthy values"
+truthy.each {
+    assert it, "$it is not truthy"
+}
+assert falsy.toSet().size() > 2, "Assign 3 different falsy values"
+truthy.each {
+    assert it, "$it is not falsy"
+}'''
             ),
-            new Koan(name: 'Elvis operator',
-                    explanation: /The Elvis operator returns the condition if it's truthy, otherwise the righthand expression./,
-                    preCode: /assert 1 ?: 2 == 1
-assert 0 ?: 2 == 2/,
-                    code: /def name/,
-                    postCode: /assert name ?: 'Frans Bauer' == 'Rex Gildo'/
-            ),
-            new Koan(name: 'nullsafe ? operator',
-                    explanation: /With the ? operator, the next method is not evaluated if the lefthand object is null, instead it will return null./,
-                    preCode: /Map map = [a: 1]
-assert map.a?.toString() == '1'
-assert map.b?.toString() == null/,
-                    code: /def key = 'a'/,
-                    postCode: /assert map[key]?.toString() == null/
-            ),
-        ]).save(failOnError: true)
-        
+        ]))
 
-        new Chapter(name: 'Java', koans: [
+
+        addChapter(new Chapter(name: 'Java',
+                links: ['http://groovy.codehaus.org/Groovy+Beans'],
+                koans: [
                 new Koan(name: 'Java beans',
-                        explanation: '''JavaBeans (or POJOs) are simple Java objects with getters (getX) and setters (setX) for its members.
-Groovy introduces an easier way to create JavaBeans. They're called GroovyBeans.
-Have a read here: http://groovy.codehaus.org/Groovy+Beans''',
+                        explanation: /JavaBeans (or POJOs) are simple Java objects with getters (getX) and setters (setX) for its members./,
                         preCode: '''public class JavaPerson {
     private String firstName;
     private String lastName;
@@ -118,8 +134,7 @@ assert andre.lastName == 'Hazes', "Set his last name during construction"/
                 ),
                 new Koan(name: 'Groovy beans',
                         explanation: '''Groovy introduces an easier way to create JavaBeans. They're called GroovyBeans.
-This class is functionally the as the last (java) one.
-Have a read here: http://groovy.codehaus.org/Groovy+Beans''',
+This class is functionally the as the last (java) one.''',
                         preCode: '''public class GroovyPerson {
     String firstName
     String lastName
@@ -130,12 +145,30 @@ dries.setFirstName('Dries') //Groovy makes a setter for us
 ''',
                         postCode: /assert dries.lastName == 'Roelvink'/
                 ),
-        ]).save(failOnError: true)
+                new Koan(name: 'Groovy beans',
+                        explanation: /Even though groovy makes a setter for you, you can override it to change the behaviour./,
+                        code: '''public class GroovyPerson {
+    String firstName
+    String lastName
+
+    void setFirstName(String value) {
+        firstName = value.capitalize()
+    }
+}
+''',
+                        postCode: /def dries = new GroovyPerson(firstName: 'dries', lastName: 'roelvink')
+assert dries.lastName == 'Roelvink', "make a setter for lastName"
+assert dries.fullName == 'Dries Roelvink', "make a getter for fullName"/
+                ),
+        ]))
 
 
-        new Chapter(name: 'Dynamic typing', koans: [
+        addChapter(new Chapter(name: 'Dynamic typing',
+                links: [],
+                koans: [
             new Koan(name: 'def',
-                    explanation: 'It is not necessary to specify the type of variables. You can use the keyword def. \nNote that it may still be useful to specify the type anyway, to improve readability.',
+                    explanation: /It is not necessary to specify the type of variables. You can use the keyword def.
+Note that it may still be useful to specify the type anyway, to improve readability./,
                     code: /def variable1 = true
 variable1 = 'The answer to everything'/,
                     postCode: /assert variable1 == 42, 'variable1 has no type, so it may be anything'
@@ -150,19 +183,21 @@ variable1 = 'The answer to everything'/,
 assert variable2 instanceof String, 'Give variable2 the correct type'/
             ),
             new Koan(name: 'Calling a method on a dynamic variable',
-                    explanation: '',
+                    explanation: /The code compiles and runs, but throws an exception when it tries to call a method that doesn't exist on this type/,
                     code: "def variable = 'fortytwo'",
                     postCode: '''try {
     variable.length()  // Invalid method for Boolean type.
-    assert false, 'When you change the type of the variable, the previous statement will throw an exception'
+    assert false, 'Change the type of the variable, so the previous statement will throw an exception'
 } catch (RuntimeException e) {
-    assert true, "The code compiles and runs, but throws an exception when it tries to call a method that doesn't exist on this type"
+    assert true, "We want to throw this exception"
 }'''
             ),
-        ]).save(failOnError: true)
+        ]))
 
-        
-        new Chapter(name: 'Methods', koans: [
+
+        addChapter(new Chapter(name: 'Methods',
+                links: ['http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures'],
+                koans: [
             new Koan(name: 'No return',
                     explanation: 'A method returns the value of the last statement. No need to explicitly use the return keyword',
                     code: /int plus(int i1, int i2) {
@@ -176,13 +211,19 @@ assert variable2 instanceof String, 'Give variable2 the correct type'/
 	i1 + i2
 }/,
                     postCode: '''assert fuzzyPlus(1, 2) == 3, "Don't break this"
-assert fuzzyPlus(100, 1) == 'too much', 'Improve the fuzzyPlus method by using an if/else statement'
+assert fuzzyPlus(100, 1) == 'too much', "Improve the fuzzyPlus method by using an if/else statement"
 '''
             ),
-        ]).save(failOnError: true)
+            new Koan(name: 'timesTwo',
+                    explanation: 'create a method to double things',
+                    postCode: '''assert timesTwo(2) == 4
+assert timesTwo('leerdammerkaas') == 'leerdammerkaasleerdammerkaas'
+'''
+            ),
+        ]))
 
-        
-        new Chapter(name: 'Strings', koans: [
+
+        addChapter(new Chapter(name: 'Strings', koans: [
             new Koan(name: /Many ways to quote a 'String'/,
                     explanation: "Using the ' or \" quotes, you can escape certain characters using \\ ",
                     code: /String s = 'Leerdammerkaas, carpaccio, wat een combinatio'/,
@@ -211,10 +252,10 @@ u komt hier toch weer.
 '''/,
                     postCode: /assert s.count('\\n') == 6 /
             ),
-        ]).save(failOnError: true)
+        ]))
 
 
-        new Chapter(name: 'Closures', koans: [
+        addChapter(new Chapter(name: 'Closures', koans: [
                 new Koan(name: /Closures/,
                         explanation: /Closures look a lot like methods, because we can pass parameters and we get a return value. But closures are anonymous. A closure is a piece of code that can be assigned to a variable. Later we can execute the code. Since Java 8 Java has lambda expressions which look a lot like Groovy closures./,
                         code: '''Closure hello = { String name -> println "Hello $name" }
@@ -256,10 +297,10 @@ timesThree({ println 'shalalalie'})/
                         postCode: /times(2) { println 'shalalala'}
 times 3 { println 'shalalalie'}/
                 ),
-        ]).save(failOnError: true)
+        ]))
 
 
-        new Chapter(name: 'Lists', koans: [
+        addChapter(new Chapter(name: 'Lists', koans: [
                 new Koan(name: 'Defining lists',
                         explanation: 'Defining a list is very easy',
                         preCode: /def empty = []
@@ -287,10 +328,10 @@ def list2 = []/,
                         postCode: /assert list1 - list2 == [1, 2]
 assert list1 + list2 == [1, 2, 3, 4]/
                 ),
-        ]).save(failOnError: true)
+        ]))
 
 
-        new Chapter(name: 'Maps', koans: [
+        addChapter(new Chapter(name: 'Maps', koans: [
                 new Koan(name: 'Defining maps',
                         explanation: '',
                         preCode: /def emptyMap = [:]
@@ -312,10 +353,10 @@ numbers.three = 3/,
                         postCode: /assert numbers['four'] == 4
 assert numbers.five == 5/
                 ),
-        ]).save(failOnError: true)
+        ]))
 
 
-        new Chapter(name: 'Collection methods', koans: [
+        addChapter(new Chapter(name: 'Collection methods', koans: [
                 new Koan(name: 'Each',
                         explanation: 'Groovy adds a lot of extra methods to the Collection API classes. Each loops through all elements',
                         preCode: /def list = [1, 2, 3]/,
@@ -348,8 +389,34 @@ assert singers.collect { it.length > 5 } == 1/
                         code: /def firstSingerWithAFiveLetterName = singers.find { false } /,
                         postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/
                 ),
-        ]).save(failOnError: true)
+        ]))
 
+        addChapter(new Chapter(name: 'Question mark',
+                links: ['http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)', 'http://mrhaki.blogspot.nl/2009/08/groovy-goodness-elvis-operator.html'],
+                koans: [
+            new Koan(name: '? operator',
+                    explanation: 'You can use the ? operator as shorthand for an if/else construction',
+                    preCode: /assert (true ? 1 : 2) == 1
+    assert (false ? 1 : 2) == 2/,
+                    code: /def isGerman = false/,
+                    postCode: /assert (isGerman ? 'Rex Gildo' : 'Andre Hazes') == 'Rex Gildo', "We prefer a German singer for this test"/
+            ),
+            new Koan(name: 'Elvis operator',  //TODO: oefening om zelf met de elvis te spelen
+                    explanation: /The Elvis operator returns the condition if it's truthy, otherwise the righthand expression./,
+                    preCode: /assert 1 ?: 2 == 1
+    assert 0 ?: 2 == 2/,
+                    code: /def name/,
+                    postCode: /assert name ?: 'Frans Bauer' == 'Rex Gildo'/
+            ),
+            new Koan(name: 'nullsafe ? operator',
+                    explanation: /With the ? operator, the next method is not evaluated if the lefthand object is null, instead it will return null./,
+                    preCode: /Map map = [a: 1]
+    assert map.a?.toString() == '1'
+    assert map.b?.toString() == null/,
+                    code: /def key = 'a'/,
+                    postCode: /assert map[key]?.toString() == null/
+            ),
+        ]))
 
 
     }

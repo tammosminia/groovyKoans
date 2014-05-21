@@ -1,23 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Groovy Koans</title>
+    <meta name="layout" content="main"/>
 </head>
 
 <body>
 
-<h2>Available koans</h2>
-<ul>
-    <g:each in="${chapters}" var="chapter">
-        <li>
-            ${chapter.name}<br/>
-        <ul>
-            <g:each in="${chapter.koans}" var="koan">
-                <li><g:link action="view" id="${koan.id}">${koan.name}</g:link></li>
-            </g:each>
-        </ul>
-        </li>
-    </g:each>
-</ul>
+<h2>Groovy koans</h2>
+<p>Learn to program in groovy.</p>
+<p>We assume you know how to program in java. But if you know any other imperative class-based language you'll probably be ok.</p>
+<p>This course is made up of lots of little assignments where a new thing is explained and you'll have to use it.</p>
+<p>Have fun!</p>
+<g:link action="view" params="[number: 1]">Start</g:link>
 </body>
 </html>

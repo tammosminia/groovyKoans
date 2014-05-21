@@ -22,10 +22,10 @@
 	<body class="container">
         <div class="navigation">
             <g:link url="http://jdriven.com"><g:img dir="images" file="jdriven.png"/></g:link>
-            <g:link action="index">list</g:link>
+            <g:link controller="koan" action="index">start</g:link>
+            <g:link controller="koan" action="list">list</g:link>
         </div>
 
-    %{--<div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a></div>--}%
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
