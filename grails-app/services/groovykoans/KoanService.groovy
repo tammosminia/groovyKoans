@@ -45,7 +45,7 @@ class KoanService {
         final SecureASTCustomizer secure = new SecureASTCustomizer()
         secure.with {
             closuresAllowed = true
-            methodDefinitionAllowed = false
+            methodDefinitionAllowed = true
 
             importsWhitelist = []
             staticImportsWhitelist = []
