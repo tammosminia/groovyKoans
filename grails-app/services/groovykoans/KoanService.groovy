@@ -66,7 +66,7 @@ class KoanService {
                     Types.COMPARE_LESS_THAN_EQUAL,
                     Types.COMPARE_GREATER_THAN,
                     Types.COMPARE_GREATER_THAN_EQUAL,
-                    Types.EQUAL
+                    Types.EQUAL,
 
             ].asImmutable()
 
@@ -85,9 +85,7 @@ class KoanService {
                     List
             ].asImmutable()
 
-            receiversClassesWhiteList = []
-
-//
+            receiversClassesBlackList = [] //TODO: Alle classes opsommen waar je methodes op mag aanroepen?
 
         }
 

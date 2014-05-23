@@ -6,6 +6,6 @@
 
 <body>
 
-<p>That were all the test. You're a groovy master now!</p>
+<p>That were all the tests. You're a groovy master now!</p>
 </body>
 </html>

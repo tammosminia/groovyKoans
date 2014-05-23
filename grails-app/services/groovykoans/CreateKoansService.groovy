@@ -220,6 +220,10 @@ assert fuzzyPlus(100, 1) == 'too much', "Improve the fuzzyPlus method by using a
 assert timesTwo('leerdammerkaas') == 'leerdammerkaasleerdammerkaas'
 '''
             ),
+            new Koan(name: 'methods without braces',
+                    explanation: /You don't need to put braces around method parameters/,
+                    postCode: /timesTwo 2/
+            ),
         ]))
 
 
@@ -250,18 +254,19 @@ u wordt bedankt voor weer 'n avond gezelligheid,
 dag mevrouw en dag meneer,
 u komt hier toch weer.
 '''/,
-                    postCode: /assert s.count('\\n') == 6 /
+                    postCode: /assert s.count('\\n') == 6, 'Add some new lines to the song.'/
             ),
         ]))
 
 
-        addChapter(new Chapter(name: 'Closures', koans: [
+        addChapter(new Chapter(name: 'Closures',
+                links: ['http://groovy.codehaus.org/Closures'],
+                koans: [
                 new Koan(name: /Closures/,
                         explanation: /Closures look a lot like methods, because we can pass parameters and we get a return value. But closures are anonymous. A closure is a piece of code that can be assigned to a variable. Later we can execute the code. Since Java 8 Java has lambda expressions which look a lot like Groovy closures./,
                         code: '''Closure hello = { String name -> println "Hello $name" }
 hello('Frans')
-Closure plusOne = { int i -> i }
-Closure plus = { i1, i2 -> i1 * i2 }''',
+Closure times = { i1, i2 -> i1 * i2 }''',
                         postCode: /assert plusOne(1) == 2
 assert plus(1, 2) == 3/
                 ),
@@ -286,16 +291,24 @@ assert plusOne('Marco') == 'Marco1/
                 ),
                 new Koan(name: /Closure as method parameter/,
                         explanation: /Because a closure is a variable we can use it as a method parameter./,
-                        preCode: /Closure closure = { 2 }/,
-                        code: /def timesThree/,
-                        postCode: /assert timesThree(closure) == 6
-timesThree({ println 'shalalalie'})/
+                        code: /def runThreeTimes(Closure closure) {
+}/,
+                        postCode: /runThreeTimes({ println 'shalalalie'})
+assert runThreeTimes({ 2 }) == 2/
                 ),
                 new Koan(name: /Closure as last method parameter/,
                         explanation: /Groovy has syntactic sugar. You can put the closure outside the argument list if it's the last argument/,
                         code: /def times/,
                         postCode: /times(2) { println 'shalalala'}
 times 3 { println 'shalalalie'}/
+                ),
+                new Koan(name: /Bound parameters/,
+                        explanation: /Closures may refer to variables not listed in their parameter list. Such variables are referred to as "free" variables. They are "bound" to variables within the scope where they are defined./,
+                        code: /def times/,
+                        postCode: /int runAmount = 0
+Closure run = { runAmount++ }
+threeTimes(run)
+assert runAmount == 3/
                 ),
         ]))
 
@@ -375,13 +388,15 @@ assert numbers.five == 5/
                         explanation: /There is a shorthand for collect./,
                         preCode: /List singers = ['Frans', 'Andre', 'De Havenzangers']
 List stringLengths = list*.length()/,
-                        code: /assert stringLengths = 'What is this?'/,
+                        code: /assert stringLengths = 'What is this?'
+def lowercase/,
+                        postCode: /assert lowercase == ['frans', 'andre', 'de havenzangers'], 'Use the * notation to transform the list to lowercase'/,
                 ),
                 new Koan(name: 'findAll',
                         explanation: /With findAll you can filter out elements./,
-                        code: /List singers/,
-                        postCode: /assert singers.size() == 2
-assert singers.collect { it.length > 5 } == 1/
+                        preCode: /List singers = ['Frans', 'Andre', 'De Havenzangers', 'Rex Gildo', 'Zanger Rinus']/,
+                        code: /def singersWithAFiveLetterName/,
+                        postCode: /assert singersWithAFiveLetterName.size() == 2/
                 ),
                 new Koan(name: 'find',
                         explanation: /find just returns the first matching item./,
@@ -399,22 +414,29 @@ assert singers.collect { it.length > 5 } == 1/
                     preCode: /assert (true ? 1 : 2) == 1
     assert (false ? 1 : 2) == 2/,
                     code: /def isGerman = false/,
-                    postCode: /assert (isGerman ? 'Rex Gildo' : 'Andre Hazes') == 'Rex Gildo', "We prefer a German singer for this test"/
+                    postCode: /assert (isGerman ? 'Rex Gildo' : 'Andre Hazes') == 'Rex Gildo', "We prefer a German singer for this test"
+assert numberAppraiser(3) == 'low', "Make a function that returns 'low' for numbers under 10 and 'high' for higher numbers."
+assert numberAppraiser(46) == 'high'/
             ),
             new Koan(name: 'Elvis operator',  //TODO: oefening om zelf met de elvis te spelen
                     explanation: /The Elvis operator returns the condition if it's truthy, otherwise the righthand expression./,
                     preCode: /assert 1 ?: 2 == 1
-    assert 0 ?: 2 == 2/,
+    assert 0 ?: 2 == 2
+
+    String greatSinger(List suggestions) {
+    }/,
                     code: /def name/,
-                    postCode: /assert name ?: 'Frans Bauer' == 'Rex Gildo'/
+                    postCode: /assert name ?: 'Frans Bauer' == 'Rex Gildo'
+assert greatSinger(['Andre Hazes', 'Frans Bauer']) == 'Andre Hazes', "Complete the method, so it returns the first suggestion from the list, or defaults to 'Zanger Rinus'"
+assert greatSinger([]) == 'Zanger Rinus'/
             ),
             new Koan(name: 'nullsafe ? operator',
                     explanation: /With the ? operator, the next method is not evaluated if the lefthand object is null, instead it will return null./,
-                    preCode: /Map map = [a: 1]
-    assert map.a?.toString() == '1'
-    assert map.b?.toString() == null/,
+                    preCode: /def a
+assert a?.toString() == null/,
                     code: /def key = 'a'/,
-                    postCode: /assert map[key]?.toString() == null/
+                    postCode: /assert lower('HEB JE EVEN VOOR MIJ') == 'heb je even voor mij', "define the lower method, so it lowers the incoming string and doesn't crash on null."
+assert lower(null) == null/
             ),
         ]))
 
