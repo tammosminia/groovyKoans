@@ -8,6 +8,7 @@ class Koan {
     String preCode
     String code
     String postCode
+    String solution
 
     static constraints = {
         number(nullable: false)
@@ -16,6 +17,7 @@ class Koan {
         preCode(nullable: true, blank: true, maxSize: 10000)
         code(nullable: true, blank: true, maxSize: 10000)
         postCode(nullable: true, blank: true, maxSize: 10000)
+        solution(nullable: true, blank: true, maxSize: 10000)
     }
 
 }

@@ -53,4 +53,15 @@ class KoanServiceSpec extends Specification {
         result.success
         result.output == 'lalala\n'
     }
+
+    void "runKoan - System.exit(-1)"() {
+        def koan = /System.exit(-1)/
+
+        when:
+        def result = service.runKoan(koan)
+
+        then:
+        !result.success
+        result.exception
+    }
 }

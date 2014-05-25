@@ -30,14 +30,14 @@ class KoanServiceGroovyShellSpec extends Specification {
             println koan;
             def result = service.runKoan("""
                     ${koan.preCode}
-                    ${koan.code}
+                    ${koan.solution}
                     ${koan.postCode}
             """)
-            if (result.exception == null || !(result.exception instanceof java.lang.SecurityException)) {
+            if (result.exception == null){//} || !(result.exception instanceof java.lang.SecurityException)) {
                 log.info "Executed koan ${koan.name} #${koan.id} with success"
                 successCount++;
             } else {
-                fail "Could not executed Koan: ${result}"
+                fail "Could not execute Koan: ${result}"
             }
         }
 
