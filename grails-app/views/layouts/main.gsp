@@ -21,9 +21,11 @@
 	</head>
 	<body class="container">
         <div class="navigation">
-            <g:link url="http://jdriven.com"><g:img dir="images" file="jdriven.png"/></g:link>
-            <g:link controller="koan" action="index">start</g:link>
-            <g:link controller="koan" action="list">list</g:link>
+            <nav class="navbar navbar-default" role="navigation">
+                <g:link url="http://jdriven.com"><g:img dir="images" file="jdriven.png"/></g:link>
+                <g:link controller="koan" action="index">start</g:link>
+                <g:link controller="koan" action="list">list</g:link>
+            </nav>
         </div>
 
 		<g:layoutBody/>

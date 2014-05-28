@@ -269,10 +269,8 @@ assert timesTwo('leerdammerkaas') == 'leerdammerkaasleerdammerkaas'
             ),
             new Koan(name: 'methods without braces',
                     explanation: /You don't need to put braces around method parameters/,
-                    postCode: /timesTwo 2/,
-                    solution: /def timesTwo(iets) {
-  iets + iets
-}/
+                    code: /println("Deze brief bind ik vast aan m'n vlieger")
+println "Tot zij hem ontvangt, zij die ik mis"/,
             ),
             new Koan(name: 'method parameters with default values',
                     explanation: /Method parameters can have default values/,
@@ -280,7 +278,7 @@ assert timesTwo('leerdammerkaas') == 'leerdammerkaasleerdammerkaas'
     value + toAdd
 }
 assert add(3) == 4/,
-                    postCode: /assert greet('Zangeres zonder naam') == 'hello Zangeres zonder naam'
+                    postCode: /assert greet('Zangeres zonder naam') == 'hello Zangeres zonder naam', "Define the greet method"
 assert greet() == 'hello stranger'/,
                     solution: '''def greet(name = 'stranger') {
     "hello $name"
@@ -380,10 +378,13 @@ assert plusOne('Marco') == 'Marco1'/,
 }/
                 ),
                 new Koan(name: /Closure as last method parameter/,
-                        explanation: /Groovy has syntactic sugar. You can put the closure outside the argument list if it's the last argument/,
-                        code: /def times/,
+                        explanation: /Groovy has syntactic sugar. You can put the closure outside the argument list if it's the last argument. Notice how all the ways to call the method are valid.
+Create a method that runs a closure x times./,
+                        code: /def times(int amount, Closure closure) {
+}/,
                         postCode: /times(2) { println 'shalalala'}
-times 3, { println 'shalalalie'}/,
+times 2, { println 'shalalalie'}
+times(1, { println 'shalalalie'})/,
                         solution: /def times = { int number, Closure c ->
   number.times { c() }
 }/
