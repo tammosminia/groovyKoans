@@ -274,6 +274,18 @@ assert timesTwo('leerdammerkaas') == 'leerdammerkaasleerdammerkaas'
   iets + iets
 }/
             ),
+            new Koan(name: 'method parameters with default values',
+                    explanation: /Method parameters can have default values/,
+                    preCode: /def add(value, toAdd = 1) {
+    value + toAdd
+}
+assert add(3) == 4/,
+                    postCode: /assert greet('Zangeres zonder naam') == 'hello Zangeres zonder naam'
+assert greet() == 'hello stranger'/,
+                    solution: '''def greet(name = 'stranger') {
+    "hello $name"
+}'''
+            ),
         ]))
 
 
@@ -545,6 +557,36 @@ assert lower(null) == null/,
             ),
         ]))
 
+        addChapter(new Chapter(name: 'Regular expressions',
+                links: ['http://groovy.codehaus.org/Regular+Expressions', 'http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html'],
+                koans: [
+                        new Koan(name: 'Pattern',
+                                explanation: '''~ creates a Pattern from String.
+You could also use ' or " quotes to define the string, but / is best because you don't have to escape \\s ''',
+                                code: '''def pattern = ~/\\d/''',
+                                postCode: /assert pattern instanceof java.util.regex.Pattern, "This is the same as Pattern.compile"
+assert pattern.matcher('oliebollenkraam').matches(), "Make a pattern that matches oliebollenkraam"/,
+                                solution: '''def pattern = ~/\\w/''',
+                        ),
+                        new Koan(name: 'Matcher',
+                                explanation: /With =~ you create a matcher. When it has at least one match, it's truthy/,
+                                preCode: 'def matcher = "123" =~ /\\d/',
+                                code: /def song/,
+                                postCode: '''assert matcher
+assert song =~ /(la){3,}+/, "compose a catchy song"''',
+                                solution: /def song = "lalala"/
+                        ),
+                        new Koan(name: 'matches',
+                                explanation: /==~ tests if String matches the pattern. The difference from =~ is that ==~ has to match the whole string. /,
+                                code: /def goodSongRegex/,
+                                postCode: /assert !('shalalalie 123' ==~ goodSongRegex), 'A good song does not contain numbers'
+assert 'Ze gelooft in mij' ==~ goodSongRegex/,
+                                solution: '''def goodSongRegex = /[^\\d]*/'''
+                        ),
+                ]))
+
+        //TODO: use  use(TimeCategory) { field.after(today + 5.year) }
+        //TODO: xml
 
     }
 }
