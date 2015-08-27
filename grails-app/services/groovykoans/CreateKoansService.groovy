@@ -21,6 +21,8 @@ class CreateKoansService {
             chapter.save(failOnError: true)
         }
 
+        //TODO: Roy Donders toevoegen
+        //TODO: eerste koans geven niet goed weer wat de bedoeling is
         addChapter(new Chapter(name: 'Introduction',
                 links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
                 koans: [
@@ -31,9 +33,9 @@ Each assignment has a short explanation. (this block)/,
 //Press the play button beneath. It will tell you this code runs successfully and you can go on with the next test.''',
             ),
             new Koan(name: 'Code block',
-                    explanation: /The code block is made up of three parts. You can only edit the middle part. This is to guide you in the right direction/,
-                    preCode: /String s = 'You cannot edit the first part'/,
-                    code: /String s2 = 'You can edit the middle part'/,
+                    explanation: /The code block is made up of three parts. You can only edit the second part. This is to guide you in the right direction/,
+                    preCode: /String s = 'You cannot edit this line.'/,
+                    code: /String s2 = 'You can edit this line.'/,
                     postCode: /assert true, 'The last part usually contains assertions.'/
             ),
             new Koan(name: 'println',
@@ -52,7 +54,7 @@ Each assignment has a short explanation. (this block)/,
             )
         ]))
 
-
+                    //TODO: asBoolean method
         addChapter(new Chapter(name: 'Booleans',
                 links: ['http://groovy.codehaus.org/Groovy+Truth'],
                 koans: [
@@ -79,15 +81,13 @@ String s2 = 'a'/
             ),
             new Koan(name: 'Numerical truth',
                     explanation: 'Similar to C code, null or zeros are false. Any other number is true.',
-                    code: /int i1 = 1
-int i2 = -1
-int i3 = 0/,
-                    postCode: /assert i1, "positive integers are truthy"
+                    preCode: /int one = 1
+int negative = -1
+int zero = 0/,
+                    code: /assert one, "positive integers are truthy"
 assert i2, "negative integers are truthy"
 assert i3, "0 Is not truthy"/,
-                    solution: /int i1 = 1
-int i2 = -1
-int i3 = 1/
+                    solution: /assert !i3, "0 Is not truthy"/
             ),
             new Koan(name: 'truth',
                     explanation: 'Assign some truthy and some falsy values.',
@@ -99,8 +99,8 @@ truthy.each {
     assert it, "$it is not truthy"
 }
 assert falsy.toSet().size() > 2, "Assign 3 different falsy values"
-truthy.each {
-    assert it, "$it is not falsy"
+falsy.each {
+    assert !it, "$it is not falsy"
 }''',
                     solution: /List truthy = [1, true, 'bla']
 List falsy = [0, false, null]/
@@ -211,8 +211,10 @@ def variable2 = 'enlightenment'/
             new Koan(name: 'Runtime typing',
                     explanation: 'Objects do have a type at runtime.',
                     code: /def variable1 = true
+println variable1.class.name
 def variable2
-variable1 = 'The answer to everything'/,
+variable1 = 'The answer to everything'
+println variable1.class.name/,
                     postCode: /assert variable1.class.name == 'java.lang.Integer', 'Give variable1 the correct type'
 assert variable2 instanceof String, 'Give variable2 the correct type'/,
                     solution: /def variable1 = 42
@@ -232,6 +234,8 @@ def variable2 = 'bla'/
         ]))
 
 
+        //TODO: variable length parameters
+        //TODO: spread operator method(*list)
         addChapter(new Chapter(name: 'Methods',
                 links: ['http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures'],
                 koans: [
@@ -279,7 +283,7 @@ println "Tot zij hem ontvangt, zij die ik mis"/,
 }
 assert add(3) == 4/,
                     postCode: /assert greet('Zangeres zonder naam') == 'hello Zangeres zonder naam', "Define the greet method"
-assert greet() == 'hello stranger'/,
+assert greet() == 'hello stranger', 'Let the greet method have a default parameter.'/,
                     solution: '''def greet(name = 'stranger') {
     "hello $name"
 }'''
@@ -331,6 +335,9 @@ u komt hier toch weer.
         ]))
 
 
+        //TODO: closure with a default value
+        //TODO: transforming a method into a closure:  def closure = this.&methodName
+        //TODO: curry method
         addChapter(new Chapter(name: 'Closures',
                 links: ['http://groovy.codehaus.org/Closures'],
                 koans: [
@@ -399,6 +406,12 @@ assert runAmount == 3/,
                         solution: /def threeTimes = { Closure c ->
   3.times { c() }
 }/
+                ),
+                new Koan(name: /Default parameters/,
+                        explanation: /Closure parameters can have default values./,
+                        code: '''def greet = { greeting, name -> "${greeting} ${name}" }''',
+                        postCode: /assert greet('Roy') == 'hello Roy'/,
+                        solution: '''def greet = { greeting = 'hello', name -> "${greeting} ${name}" }'''
                 ),
         ]))
 
@@ -471,6 +484,8 @@ numbers.five = 5/
         ]))
 
 
+        //TODO: eachWithIndex
+        //TODO: groupBy
         addChapter(new Chapter(name: 'Collection methods',
                 links: ['http://groovy.codehaus.org/Collections'],
                 koans: [
@@ -508,6 +523,24 @@ def lowercase = singers*.toLowerCase()/
                 new Koan(name: 'find',
                         explanation: /find just returns the first matching item./,
                         preCode: /List singers = ['Rex Gildo', 'Frans', 'Andre', 'De Havenzangers']/,
+                        code: /def firstSingerWithAFiveLetterName = singers.find { false } /,
+                        postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/,
+                        solution: /def firstSingerWithAFiveLetterName = singers.find { it.length() == 5 }/
+                ),
+                new Koan(name: 'groupBy',    //TODO: hoe heet de belgische zanger?
+                        explanation: /GroupBy creates a map./,
+                        preCode: /class Singer {
+    String name
+    String country
+}
+
+List singers = [
+    new Singer(name: 'Roy Donders', country: 'BE'),
+    new Singer(name: 'Andre Hazes', country: 'NL'),
+    new Singer(name: 'hoe', country: 'BE'),
+    new Singer(name: 'Frans Bauer', country: 'NL'),
+    new Singer(name: 'Rex Gildo', country: 'DE'),
+]/,
                         code: /def firstSingerWithAFiveLetterName = singers.find { false } /,
                         postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/,
                         solution: /def firstSingerWithAFiveLetterName = singers.find { it.length() == 5 }/
@@ -586,8 +619,13 @@ assert 'Ze gelooft in mij' ==~ goodSongRegex/,
                         ),
                 ]))
 
+        //TODO: switch
+        //TODO: range
+        //TODO: spaceship operator
+        //TODO: operator overloading
         //TODO: use  use(TimeCategory) { field.after(today + 5.year) }
-        //TODO: xml
+        //TODO: xml  + url.text
+        //TODO: AST @Delegate @Singleton @EqualsAndHashCode
 
     }
 }

@@ -23,7 +23,7 @@
         <div class="navigation">
             <nav class="navbar navbar-default" role="navigation">
                 <g:link url="http://jdriven.com"><g:img dir="images" file="jdriven.png"/></g:link>
-                <g:link controller="koan" action="index">start</g:link>
+				<g:link action="view" params="[number: 0]">Start</g:link>
                 <g:link controller="koan" action="list">list</g:link>
             </nav>
         </div>

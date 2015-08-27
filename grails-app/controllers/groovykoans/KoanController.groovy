@@ -21,7 +21,7 @@ class KoanController {
     }
 
     def view(int number, String code) {
-        assert number
+        assert number != null
         def koan = Koan.findByNumber(number)
         assert koan
         if(request.post) {
