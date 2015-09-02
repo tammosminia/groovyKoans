@@ -18,6 +18,7 @@
 		<g:layoutHead/>
 		<g:javascript library="application"/>		
 		<r:layoutResources />
+		<ga:trackPageview />
 	</head>
 	<body class="container">
         <div class="navigation">
