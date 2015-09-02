@@ -4,23 +4,38 @@ import groovyKoans.Chapter
 import groovyKoans.Koan
 
 class CreateKoansService {
+    def chapters = new ArrayList<Chapter>()
+    def koans = new ArrayList<Koan>()
+
+    Koan getKoan(int number) {
+        koans.get(number)
+    }
+
+    //returns null if this was the last koan
+    Integer nextKoan(int number) {
+        if (number >= koans.size()) {
+            null
+        } else {
+            number + 1
+        }
+    }
+
     void reload() {
-        Chapter.list()*.delete()
+        chapters = new ArrayList<Chapter>()
+        koans = new ArrayList<Koan>()
         createAll()
     }
 
-    void createAll() {
-        int numberOfChapters = 0
-        int numberOfKoans = 0
-        def addChapter = { Chapter chapter ->
-            chapter.number = numberOfChapters++
-            chapter.koans.each {
-                it.number = numberOfKoans++
-                it.chapter = chapter
-            }
-            chapter.save(failOnError: true)
+    private void addChapter(Chapter chapter) {
+        chapters.add(chapter)
+        chapter.koans.each { koan ->
+            koan.chapter = chapter
+            koan.number = koans.size()
+            koans.add(koan)
         }
+    }
 
+    void createAll() {
         //TODO: Roy Donders toevoegen
         //TODO: eerste koans geven niet goed weer wat de bedoeling is
         addChapter(new Chapter(name: 'Introduction',
@@ -85,9 +100,9 @@ String s2 = 'a'/
 int negative = -1
 int zero = 0/,
                     code: /assert one, "positive integers are truthy"
-assert i2, "negative integers are truthy"
-assert i3, "0 Is not truthy"/,
-                    solution: /assert !i3, "0 Is not truthy"/
+assert negative, "negative integers are truthy"
+assert zero, "0 Is not truthy"/,
+                    solution: /assert !zero, "0 Is not truthy"/
             ),
             new Koan(name: 'truth',
                     explanation: 'Assign some truthy and some falsy values.',

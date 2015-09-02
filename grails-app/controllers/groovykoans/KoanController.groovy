@@ -12,7 +12,7 @@ class KoanController {
 
     def list() {
         [
-                chapters: Chapter.list()
+                chapters: createKoansService.chapters
         ]
     }
 
@@ -22,10 +22,10 @@ class KoanController {
 
     def view(int number, String code) {
         assert number != null
-        def koan = Koan.findByNumber(number)
+        def koan = createKoansService.getKoan(number)
         assert koan
         if(request.post) {
-            def result = koanService.runKoan("${koan.preCode ?: ''}\n$code\n${koan.postCode ?: ''}")
+            def result = koanService.runKoan("${koan.preCode ?: ''}\n${code ?: ''}\n${koan.postCode ?: ''}")
             [
                     koan: koan,
                     code: code,
@@ -43,8 +43,8 @@ class KoanController {
     }
 
     def next(int number) {
-        def nextNumber = koanService.nextKoan(number)
-        if(nextNumber) {
+        def nextNumber = createKoansService.nextKoan(number)
+        if (nextNumber) {
             redirect(action: 'view', params: [number: nextNumber])
         } else {
             redirect(action: 'end')
