@@ -119,3 +119,5 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+google.analytics.webPropertyID = 'UA-67066383-1'

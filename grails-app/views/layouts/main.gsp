@@ -15,6 +15,7 @@
     <r:require modules="bootstrap, application"/>
     <g:layoutHead/>
     %{--<g:javascript library="application"/>--}%
+    <ga:trackPageview />
     <r:layoutResources/>
 </head>
 
