@@ -2,6 +2,7 @@ package groovykoans
 
 import groovyKoans.Chapter
 import groovyKoans.Koan
+import groovyKoans.Link
 
 class CreateKoansService {
     def chapters = new ArrayList<Chapter>()
@@ -37,7 +38,10 @@ class CreateKoansService {
 
     void createAll() {
         addChapter(new Chapter(name: 'Introduction',
-                links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
+                links: [
+                        new Link(name: 'Groovy documentation', url: 'http://groovy-lang.org/documentation.html'),
+                        new Link(name: 'Groovy Goodness', url: 'http://mrhaki.blogspot.nl/search/label/Groovy%3AGoodness')
+                ],
                 koans: [
             new Koan(name: 'Introduction',
                     explanation: /We'll start with a few introductory tests to get you familiar with the form.
@@ -69,7 +73,7 @@ Each assignment has a short explanation. (this block)/,
 
                     //TODO: asBoolean method
         addChapter(new Chapter(name: 'Booleans',
-                links: ['http://groovy.codehaus.org/Groovy+Truth'],
+                links: [new Link(name: 'Groovy truth', url: 'http://groovy.codehaus.org/Groovy+Truth')],
                 koans: [
             new Koan(name: 'Comparing booleans',
                     explanation: '',
@@ -122,7 +126,7 @@ List falsy = [0, false, null]/
 
 
         addChapter(new Chapter(name: 'Java',
-                links: ['http://groovy.codehaus.org/Groovy+Beans'],
+                links: [new Link(name: 'Groovy beans', url: 'http://groovy.codehaus.org/Groovy+Beans')],
                 koans: [
                 new Koan(name: 'Java beans',
                         explanation: /JavaBeans (or POJOs) are simple Java objects with getters (getX) and setters (setX) for its members./,
@@ -250,7 +254,7 @@ def variable2 = 'bla'/
         //TODO: variable length parameters
         //TODO: spread operator method(*list)
         addChapter(new Chapter(name: 'Methods',
-                links: ['http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures'],
+                links: [new Link(name: 'Method signatures', url: 'http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures')],
                 koans: [
             new Koan(name: 'No return',
                     explanation: 'A method returns the value of the last statement. No need to explicitly use the return keyword',
@@ -352,7 +356,7 @@ u komt hier toch weer.
         //TODO: transforming a method into a closure:  def closure = this.&methodName
         //TODO: curry method
         addChapter(new Chapter(name: 'Closures',
-                links: ['http://groovy.codehaus.org/Closures'],
+                links: [new Link(name: 'Closures', url: 'http://groovy.codehaus.org/Closures')],
                 koans: [
                 new Koan(name: /Closures/,
                         explanation: /Closures look a lot like methods, because we can pass parameters and we get a return value. But closures are anonymous. A closure is a piece of code that can be assigned to a variable. Later we can execute the code. Since Java 8 Java has lambda expressions which look a lot like Groovy closures./,
@@ -500,7 +504,7 @@ numbers.five = 5/
         //TODO: eachWithIndex
         //TODO: groupBy
         addChapter(new Chapter(name: 'Collection methods',
-                links: ['http://groovy.codehaus.org/Collections'],
+                links: [new Link(name: 'Collections', url: 'http://groovy.codehaus.org/Collections')],
                 koans: [
                 new Koan(name: 'Each',
                         explanation: 'Groovy adds a lot of extra methods to the Collection API classes. Each loops through all elements',
@@ -561,7 +565,8 @@ List singers = [
         ]))
 
         addChapter(new Chapter(name: 'Question mark',
-                links: ['http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)', 'http://mrhaki.blogspot.nl/2009/08/groovy-goodness-elvis-operator.html'],
+                links: [new Link(name: 'Elvis operator', url: 'http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)'),
+                        new Link(name: 'Explanation by mr Haki', url: 'http://mrhaki.blogspot.nl/2009/08/groovy-goodness-elvis-operator.html')],
                 koans: [
             new Koan(name: '? operator',
                     explanation: 'You can use the ? operator as shorthand for an if/else construction',
@@ -605,7 +610,8 @@ assert lower(null) == null/,
         ]))
 
         addChapter(new Chapter(name: 'Regular expressions',
-                links: ['http://groovy.codehaus.org/Regular+Expressions', 'http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html'],
+                links: [new Link(name: 'Using regular expressions in Groovy', url: 'http://groovy.codehaus.org/Regular+Expressions'),
+                        new Link(name: 'Javadoc', url: 'http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html')],
                 koans: [
                         new Koan(name: 'Pattern',
                                 explanation: '''~ creates a Pattern from String.

@@ -19,7 +19,7 @@
     <div class="links col-xs-4">
         <ul>
             <g:each in="${koan.chapter.links}" var="link">
-                <li><g:link url="${link}">${link}</g:link></li>
+                <li><g:link url="${link.url}">${link.name}</g:link></li>
             </g:each>
         </ul>
     </div>
