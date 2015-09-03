@@ -36,8 +36,6 @@ class CreateKoansService {
     }
 
     void createAll() {
-        //TODO: Roy Donders toevoegen
-        //TODO: eerste koans geven niet goed weer wat de bedoeling is
         addChapter(new Chapter(name: 'Introduction',
                 links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
                 koans: [
@@ -558,7 +556,7 @@ List singers = [
 ]/,
                         code: /def firstSingerWithAFiveLetterName = singers.find { false } /,
                         postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/,
-                        solution: /def firstSingerWithAFiveLetterName = singers.find { it.length() == 5 }/
+                        solution: /def firstSingerWithAFiveLetterName = singers.find { it.name.length() == 5 }/
                 ),
         ]))
 

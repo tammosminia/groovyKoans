@@ -28,7 +28,7 @@ class KoanServiceSpec extends Specification {
 
         then:
         !result.success
-        result.message.startsWith 'blablabla'  //TODO: de onzin hier achter weghalen
+        result.message.startsWith 'blablabla'
     }
 
     void "runKoan - exception"() {
