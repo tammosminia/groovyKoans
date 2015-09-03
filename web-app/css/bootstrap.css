@@ -7292,10 +7292,7 @@ a.list-group-item-danger.active:focus {
 .jumbotron {
     border: 1px solid rgba(0, 0, 0, 0.6);
 }
-.panel-primary .panel-heading,
-.panel-success .panel-heading,
-.panel-danger .panel-heading,
-.panel-warning .panel-heading,
-.panel-info .panel-heading {
-    border-color: #000;
+
+.panel {
+min-height: 125px;
 }

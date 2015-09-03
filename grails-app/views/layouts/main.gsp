@@ -19,6 +19,7 @@
 </head>
 
 <body>
+
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -32,12 +33,27 @@
 
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
-
+                <li>
+                    <g:link content="koan">Introduction</g:link>
+                </li>
                 <li>
                     <g:link action="view" params="[number: 0]">Start</g:link>
                 </li>
                 <li>
                     <g:link controller="koan" action="list">Overview</g:link>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Resources <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu" aria-labelledby="themes">
+                        <li><a href="http://groovy-lang.org/documentation.html"
+                               target="_blank">Groovy Documentation</a></li>
+                        <li><a href="http://mrhaki.blogspot.nl/search/label/Groovy"
+                               target="_blank">Mr. Haki's Groovy blogs</a></li>
+                        <li class="divider"></li>
+                        <li><a href="https://leanpub.com/groovy-goodness-notebook"
+                               target="_blank">Groovy Goodness Notebook</a></li>
+                    </ul>
                 </li>
             </ul>
 
@@ -51,7 +67,11 @@
 </div>
 
 <div class="container">
-    <g:layoutBody/>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 ">
+            <g:layoutBody/>
+        </div>
+    </div>
 </div>
 <r:layoutResources/>
 </body>

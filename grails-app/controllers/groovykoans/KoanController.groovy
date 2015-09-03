@@ -24,27 +24,26 @@ class KoanController {
         assert number != null
         def koan = Koan.findByNumber(number)
         assert koan
-        if(request.post) {
+        def model = [
+                koan: koan,
+                code: koan.code,
+                totalKoans : Koan.count()
+        ]
+        if (request.post) {
             def result = koanService.runKoan("${koan.preCode ?: ''}\n$code\n${koan.postCode ?: ''}")
-            [
-                    koan: koan,
-                    code: code,
-                    success: result.success,
+            model << [
+                    success  : result.success,
                     exception: result.exception,
-                    message: result.message,
-                    output: result.output
-            ]
-        } else {
-            [
-                    koan: koan,
-                    code: koan.code
+                    message  : result.message,
+                    output   : result.output
             ]
         }
+        model
     }
 
     def next(int number) {
         def nextNumber = koanService.nextKoan(number)
-        if(nextNumber) {
+        if (nextNumber) {
             redirect(action: 'view', params: [number: nextNumber])
         } else {
             redirect(action: 'end')
