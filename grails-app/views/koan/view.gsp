@@ -1,11 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <r:require modules="codemirror"/>
     <meta name="layout" content="main"/>
-    <g:javascript src="codemirror-4.0/codemirror.js"/>
-    <g:javascript src="codemirror-4.0/mode/groovy/groovy.js"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'codemirror.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'codemirror_override.css')}" type="text/css">
+
 </head>
 
 <body>
