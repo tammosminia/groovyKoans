@@ -540,7 +540,7 @@ def lowercase = singers*.toLowerCase()/
                         postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/,
                         solution: /def firstSingerWithAFiveLetterName = singers.find { it.length() == 5 }/
                 ),
-                new Koan(name: 'groupBy',    //TODO: hoe heet de belgische zanger?
+                new Koan(name: 'groupBy',
                         explanation: /GroupBy creates a map./,
                         preCode: /class Singer {
     String name
@@ -550,7 +550,7 @@ def lowercase = singers*.toLowerCase()/
 List singers = [
     new Singer(name: 'Roy Donders', country: 'BE'),
     new Singer(name: 'Andre Hazes', country: 'NL'),
-    new Singer(name: 'hoe', country: 'BE'),
+    new Singer(name: 'Eddy Wally', country: 'BE'),
     new Singer(name: 'Frans Bauer', country: 'NL'),
     new Singer(name: 'Rex Gildo', country: 'DE'),
 ]/,
