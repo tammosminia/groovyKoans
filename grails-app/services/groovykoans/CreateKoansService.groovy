@@ -2,29 +2,51 @@ package groovykoans
 
 import groovyKoans.Chapter
 import groovyKoans.Koan
+import groovyKoans.Link
 
 class CreateKoansService {
+    def chapters = new ArrayList<Chapter>()
+    def koans = new ArrayList<Koan>()
+
+    Koan getKoan(int number) {
+        koans.get(number)
+    }
+
+
+    Integer count() {
+        koans.size()
+    }
+
+    //returns null if this was the last koan
+    Integer nextKoan(int number) {
+        if (number >= koans.size()) {
+            null
+        } else {
+            number + 1
+        }
+    }
+
     void reload() {
-        Chapter.list()*.delete()
+        chapters = new ArrayList<Chapter>()
+        koans = new ArrayList<Koan>()
         createAll()
     }
 
-    void createAll() {
-        int numberOfChapters = 0
-        int numberOfKoans = 0
-        def addChapter = { Chapter chapter ->
-            chapter.number = numberOfChapters++
-            chapter.koans.each {
-                it.number = numberOfKoans++
-                it.chapter = chapter
-            }
-            chapter.save(failOnError: true)
+    private void addChapter(Chapter chapter) {
+        chapters.add(chapter)
+        chapter.koans.each { koan ->
+            koan.chapter = chapter
+            koan.number = koans.size()
+            koans.add(koan)
         }
+    }
 
-        //TODO: Roy Donders toevoegen
-        //TODO: eerste koans geven niet goed weer wat de bedoeling is
+    void createAll() {
         addChapter(new Chapter(name: 'Introduction',
-                links: ['http://groovy.codehaus.org/Documentation', 'http://mrhaki.blogspot.nl/'],
+                links: [
+                        new Link(name: 'Groovy documentation', url: 'http://groovy-lang.org/documentation.html'),
+                        new Link(name: 'Groovy Goodness', url: 'http://mrhaki.blogspot.nl/search/label/Groovy%3AGoodness')
+                ],
                 koans: [
             new Koan(name: 'Introduction',
                     explanation: /We'll start with a few introductory tests to get you familiar with the form.
@@ -56,7 +78,7 @@ Each assignment has a short explanation. (this block)/,
 
                     //TODO: asBoolean method
         addChapter(new Chapter(name: 'Booleans',
-                links: ['http://groovy.codehaus.org/Groovy+Truth'],
+                links: [new Link(name: 'Groovy truth', url: 'http://groovy.codehaus.org/Groovy+Truth')],
                 koans: [
             new Koan(name: 'Comparing booleans',
                     explanation: '',
@@ -85,9 +107,9 @@ String s2 = 'a'/
 int negative = -1
 int zero = 0/,
                     code: /assert one, "positive integers are truthy"
-assert i2, "negative integers are truthy"
-assert i3, "0 Is not truthy"/,
-                    solution: /assert !i3, "0 Is not truthy"/
+assert negative, "negative integers are truthy"
+assert zero, "0 Is not truthy"/,
+                    solution: /assert !zero, "0 Is not truthy"/
             ),
             new Koan(name: 'truth',
                     explanation: 'Assign some truthy and some falsy values.',
@@ -109,7 +131,7 @@ List falsy = [0, false, null]/
 
 
         addChapter(new Chapter(name: 'Java',
-                links: ['http://groovy.codehaus.org/Groovy+Beans'],
+                links: [new Link(name: 'Groovy beans', url: 'http://groovy.codehaus.org/Groovy+Beans')],
                 koans: [
                 new Koan(name: 'Java beans',
                         explanation: /JavaBeans (or POJOs) are simple Java objects with getters (getX) and setters (setX) for its members./,
@@ -237,7 +259,7 @@ def variable2 = 'bla'/
         //TODO: variable length parameters
         //TODO: spread operator method(*list)
         addChapter(new Chapter(name: 'Methods',
-                links: ['http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures'],
+                links: [new Link(name: 'Method signatures', url: 'http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures')],
                 koans: [
             new Koan(name: 'No return',
                     explanation: 'A method returns the value of the last statement. No need to explicitly use the return keyword',
@@ -339,7 +361,7 @@ u komt hier toch weer.
         //TODO: transforming a method into a closure:  def closure = this.&methodName
         //TODO: curry method
         addChapter(new Chapter(name: 'Closures',
-                links: ['http://groovy.codehaus.org/Closures'],
+                links: [new Link(name: 'Closures', url: 'http://groovy.codehaus.org/Closures')],
                 koans: [
                 new Koan(name: /Closures/,
                         explanation: /Closures look a lot like methods, because we can pass parameters and we get a return value. But closures are anonymous. A closure is a piece of code that can be assigned to a variable. Later we can execute the code. Since Java 8 Java has lambda expressions which look a lot like Groovy closures./,
@@ -487,7 +509,7 @@ numbers.five = 5/
         //TODO: eachWithIndex
         //TODO: groupBy
         addChapter(new Chapter(name: 'Collection methods',
-                links: ['http://groovy.codehaus.org/Collections'],
+                links: [new Link(name: 'Collections', url: 'http://groovy.codehaus.org/Collections')],
                 koans: [
                 new Koan(name: 'Each',
                         explanation: 'Groovy adds a lot of extra methods to the Collection API classes. Each loops through all elements',
@@ -527,7 +549,7 @@ def lowercase = singers*.toLowerCase()/
                         postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/,
                         solution: /def firstSingerWithAFiveLetterName = singers.find { it.length() == 5 }/
                 ),
-                new Koan(name: 'groupBy',    //TODO: hoe heet de belgische zanger?
+                new Koan(name: 'groupBy',
                         explanation: /GroupBy creates a map./,
                         preCode: /class Singer {
     String name
@@ -537,18 +559,19 @@ def lowercase = singers*.toLowerCase()/
 List singers = [
     new Singer(name: 'Roy Donders', country: 'BE'),
     new Singer(name: 'Andre Hazes', country: 'NL'),
-    new Singer(name: 'hoe', country: 'BE'),
+    new Singer(name: 'Eddy Wally', country: 'BE'),
     new Singer(name: 'Frans Bauer', country: 'NL'),
     new Singer(name: 'Rex Gildo', country: 'DE'),
 ]/,
                         code: /def firstSingerWithAFiveLetterName = singers.find { false } /,
                         postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/,
-                        solution: /def firstSingerWithAFiveLetterName = singers.find { it.length() == 5 }/
+                        solution: /def firstSingerWithAFiveLetterName = singers.find { it.name.length() == 5 }/
                 ),
         ]))
 
         addChapter(new Chapter(name: 'Question mark',
-                links: ['http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)', 'http://mrhaki.blogspot.nl/2009/08/groovy-goodness-elvis-operator.html'],
+                links: [new Link(name: 'Elvis operator', url: 'http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)'),
+                        new Link(name: 'Explanation by mr Haki', url: 'http://mrhaki.blogspot.nl/2009/08/groovy-goodness-elvis-operator.html')],
                 koans: [
             new Koan(name: '? operator',
                     explanation: 'You can use the ? operator as shorthand for an if/else construction',
@@ -592,7 +615,8 @@ assert lower(null) == null/,
         ]))
 
         addChapter(new Chapter(name: 'Regular expressions',
-                links: ['http://groovy.codehaus.org/Regular+Expressions', 'http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html'],
+                links: [new Link(name: 'Using regular expressions in Groovy', url: 'http://groovy.codehaus.org/Regular+Expressions'),
+                        new Link(name: 'Javadoc', url: 'http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html')],
                 koans: [
                         new Koan(name: 'Pattern',
                                 explanation: '''~ creates a Pattern from String.

@@ -1,9 +1,7 @@
 package groovykoans
 
 import grails.test.mixin.TestFor
-import groovyKoans.Koan
 import spock.lang.Specification
-import spock.lang.Unroll
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
@@ -30,7 +28,7 @@ class KoanServiceSpec extends Specification {
 
         then:
         !result.success
-        result.message.startsWith 'blablabla'  //TODO: de onzin hier achter weghalen
+        result.message.startsWith 'blablabla'
     }
 
     void "runKoan - exception"() {

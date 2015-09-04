@@ -9,8 +9,8 @@ modules = {
         resource url: 'js/application.js'
     }
     codemirror {
-        resource url: 'js/codemirror-4.0/codemirror.js'
-        resource url: 'js/codemirror-4.0/mode/groovy/groovy.js'
+        resource url: 'js/codemirror-5.6/codemirror.js'
+        resource url: 'js/codemirror-5.6/mode/groovy/groovy.js'
         resource url: 'css/codemirror.css'
         resource url: 'css/codemirror_override.css'
     }
