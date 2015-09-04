@@ -5,6 +5,9 @@ class KoanController {
     def koanService
 
     def index() {
+        [
+                chapters: koanService.chapters
+        ]
     }
 
     def list() {
@@ -25,7 +28,8 @@ class KoanController {
         def model = [
                 koan      : koan,
                 code      : koan.code,
-                totalKoans: koanService.count()
+                totalKoans: koanService.count(),
+                chapters: koanService.chapters
         ]
 
 

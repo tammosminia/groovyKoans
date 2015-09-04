@@ -12,9 +12,12 @@ class KoanService {
         koans.get(number)
     }
 
-
     Integer count() {
         koans.size()
+    }
+
+    List<Chapter> getChapters() {
+        chapters
     }
 
     //returns null if this was the last koan
