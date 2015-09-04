@@ -1,22 +1,19 @@
 package groovykoans
 
-import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import groovy.util.logging.Log
-import groovyKoans.Chapter
-import groovyKoans.Koan
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
-@TestFor(KoanService)
+@TestFor(KoanExecutionService)
 @Log
-class KoanServiceGroovyShellSpec extends Specification {
+class KoanExecutionServiceGroovyShellSpec extends Specification {
     void "run All Koans Without Security Exceptions"() {
         given:
         def successCount = 0;
-        CreateKoansService createKoansService = new CreateKoansService();
+        KoanService createKoansService = new KoanService();
         createKoansService.createAll()
 
 

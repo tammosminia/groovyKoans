@@ -46,13 +46,12 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Resources <span
                             class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="themes">
-                        <li><a href="http://groovy-lang.org/documentation.html"
-                               target="_blank">Groovy Documentation</a></li>
-                        <li><a href="http://mrhaki.blogspot.nl/search/label/Groovy"
-                               target="_blank">Mr. Haki's Groovy blogs</a></li>
-                        <li class="divider"></li>
-                        <li><a href="https://leanpub.com/groovy-goodness-notebook"
-                               target="_blank">Groovy Goodness Notebook</a></li>
+                         <g:each in="${chapters}" var="chapter">
+                            <g:each in="${chapter.links}" var="link">
+                                <li><a href="${link.url}"
+                                       target="_blank">${link.name}</a></li>
+                            </g:each>
+                        </g:each>
                     </ul>
                 </li>
             </ul>
