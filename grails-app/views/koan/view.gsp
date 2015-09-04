@@ -46,40 +46,32 @@
 
 
 <g:if test="${success}">
+
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Well done!</strong> You successfully solved Koan #${koan.number + 1} "${koan.name}"</h3>
-                </div>
+            <div class="alert alert-success">
+                <strong>Well done!</strong> You successfully solved Koan #${koan.number + 1} "${koan.name}"
                 <g:if test="${output}">
-                    <div class="panel-body" style="font-family: serif">
-                        <g:lines>${output}</g:lines>
-                    </div>
+                    <a href="#" class="alert-link pull-right"></a>
+                    <a type="button" class="alert-link pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="${output}" data-original-title="" title="">View output</a>
+
+                
                 </g:if>
             </div>
-
         </div>
     </div>
 </g:if>
 <g:if test="${exception || message}">
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Hold on! Something went wrong</h3>
-                </div>
+            <div class="alert alert-danger">
+                <strong>Hold on!</strong> ${message}
                 <g:if test="${exception}">
-                    <div class="panel-body">
-                        <g:if test="${exception}">
-                            <strong>${exception.class.name}</strong>: ${exception.message}<br/>
-                        </g:if>
-                    </div>
+                    <a type="button" class="alert-link pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="${exception.message}" data-original-title="" title="">View details</a>
                 </g:if>
-                <g:elseif test="${message}">
-                    <strong>${message} </strong>
-                </g:elseif>
             </div>
+
+
 
         </div>
     </div>
