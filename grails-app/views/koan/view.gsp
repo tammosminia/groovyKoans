@@ -8,7 +8,6 @@
 <body>
 
 <div class="row">
-
     <div class="col-md-8">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -22,40 +21,35 @@
     </div>
 
     <div class="col-md-4">
-
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Resources</h3>
             </div>
 
             <div class="panel-body">
-
                 <ul class="list-unstyled">
                     <g:each in="${koan.chapter.links}" var="link">
                         <li>
-                            <g:link url="${link}">${link}</g:link>
+                            <g:link url="${link.url}">${link.name}</g:link>
                         </li>
                     </g:each>
                 </ul>
             </div>
         </div>
     </div>
-
 </div>
 
 
 
 <g:if test="${success}">
-
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-success">
                 <strong>Well done!</strong> You successfully solved Koan #${koan.number + 1} "${koan.name}"
                 <g:if test="${output}">
                     <a href="#" class="alert-link pull-right"></a>
-                    <a type="button" class="alert-link pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="${output}" data-original-title="" title="">View output</a>
-
-                
+                    <a type="button" class="alert-link pull-right" data-container="body" data-toggle="popover"
+                       data-placement="left" data-content="${output}" data-original-title="" title="">View output</a>
                 </g:if>
             </div>
         </div>
@@ -67,19 +61,17 @@
             <div class="alert alert-danger">
                 <strong>Hold on!</strong> ${message}
                 <g:if test="${exception}">
-                    <a type="button" class="alert-link pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="${exception.message}" data-original-title="" title="">View details</a>
+                    <a type="button" class="alert-link pull-right" data-container="body" data-toggle="popover"
+                       data-placement="left" data-content="${exception.message}" data-original-title=""
+                       title="">View details</a>
                 </g:if>
             </div>
-
-
-
         </div>
     </div>
 </g:if>
 <g:form action="view" params="[number: koan.number]">
     <div class="row">
         <div class="col-md-12">
-
             <div class="codeBlock">
                 <g:textArea class="preCode" name="preCode" value="${koan.preCode}" readonly="readonly"/>
                 <g:textArea name="code" value="${code}"/>
@@ -98,10 +90,6 @@
         </div>
     </div>
 </g:form>
-
-
-
-
 <div class="row" style="padding-top: 20px;">
     <div class="col-md-12">
         <div class="progress text-right">
@@ -113,7 +101,6 @@
         </div>
     </div>
 </div>
-
 <r:script>
     CodeMirror.fromTextArea(document.getElementById("preCode"), {readOnly: true});
     CodeMirror.fromTextArea(document.getElementById("code"), {
@@ -122,5 +109,4 @@
     CodeMirror.fromTextArea(document.getElementById("postCode"), {readOnly: true});
 </r:script>
 </body>
-
 </html>
