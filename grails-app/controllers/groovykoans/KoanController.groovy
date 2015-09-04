@@ -1,52 +1,49 @@
 package groovykoans
 
-import groovyKoans.Chapter
-import groovyKoans.Koan
-
 class KoanController {
+    def koanExecutionService
     def koanService
-    def createKoansService
 
     def index() {
     }
 
     def list() {
         [
-                chapters: createKoansService.chapters
+                chapters: koanService.chapters
         ]
     }
 
     def reload() {
-        createKoansService.reload()
+        koanService.reload()
     }
 
     def view(int number, String code) {
         assert number != null
-        def koan = createKoansService.getKoan(number)
+        def koan = koanService.getKoan(number)
         assert koan
 
         def model = [
-                koan     : koan,
-                code     : koan.code,
-                totalKoans : createKoansService.count()
+                koan      : koan,
+                code      : koan.code,
+                totalKoans: koanService.count()
         ]
 
 
         if (request.post) {
-            def result = koanService.runKoan("${koan.preCode ?: ''}\n${code ?: ''}\n${koan.postCode ?: ''}")
+            def result = koanExecutionService.runKoan("${koan.preCode ?: ''}\n${code ?: ''}\n${koan.postCode ?: ''}")
             model << [
                     success  : result.success,
                     exception: result.exception,
                     message  : result.message,
                     output   : result.output,
-                    code : code
+                    code     : code
             ]
         }
         model
     }
 
     def next(int number) {
-        def nextNumber = createKoansService.nextKoan(number)
+        def nextNumber = koanService.nextKoan(number)
         if (nextNumber) {
             redirect(action: 'view', params: [number: nextNumber])
         } else {

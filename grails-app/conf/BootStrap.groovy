@@ -1,10 +1,11 @@
 class BootStrap {
 
-    def createKoansService
+    def koanService
 
     def init = { servletContext ->
-        createKoansService.createAll()
+        koanService.createAll()
     }
+
     def destroy = {
     }
 }
