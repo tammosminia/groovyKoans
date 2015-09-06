@@ -33,6 +33,7 @@ Next:
         <span class='st_googleplus_large' displayText='Google +'></span>
         <span class='st_pinterest_large' displayText='Pinterest'></span>
     </li>
+    <li><a href="mailto:tammo.sminia@jdriven.com">Give me feedback.</a></li>
     <li><a href="http://groovy.codehaus.org/Download?nc">Download groovy</a></li>
     <li><a href="https://grails.org/">Learn grails</a></li>
 </ul>
