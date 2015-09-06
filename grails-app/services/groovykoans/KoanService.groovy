@@ -260,9 +260,9 @@ def variable2 = 'bla'/
 
 
         //TODO: variable length parameters
-        //TODO: spread operator method(*list)
         addChapter(new Chapter(name: 'Methods',
-                links: [new Link(name: 'Method signatures', url: 'http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures')],
+                links: [new Link(name: 'Method signatures', url: 'http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures'),
+                    new Link(name: 'variable parameter length', url: 'http://www.javalobby.org/articles/groovy-intro3/')],
                 koans: [
             new Koan(name: 'No return',
                     explanation: 'A method returns the value of the last statement. No need to explicitly use the return keyword',
@@ -312,6 +312,16 @@ assert greet() == 'hello stranger', 'Let the greet method have a default paramet
                     solution: '''def greet(name = 'stranger') {
     "hello $name"
 }'''
+            ),
+            new Koan(name: 'methods with a variable parameter length',
+                    explanation: /It's possible to define a method that works on a list of parameters/,
+                    code: /def add(int... values) {
+}/,
+                    postCode: /assert add(1, 2, 3) == 6, "add works with 3 parameters"
+assert add(1, 2, 3, 4) == 10, 'add also works with 4 parameters'/,
+                    solution: /def add(int... values) {
+    values.sum()
+}/,
             ),
         ]))
 
@@ -510,7 +520,6 @@ numbers.five = 5/
 
 
         //TODO: eachWithIndex
-        //TODO: groupBy
         addChapter(new Chapter(name: 'Collection methods',
                 links: [new Link(name: 'Collections', url: 'http://groovy.codehaus.org/Collections')],
                 koans: [
@@ -566,9 +575,8 @@ List singers = [
     new Singer(name: 'Frans Bauer', country: 'NL'),
     new Singer(name: 'Rex Gildo', country: 'DE'),
 ]/,
-                        code: /def firstSingerWithAFiveLetterName = singers.find { false } /,
-                        postCode: /assert firstSingerWithAFiveLetterName == 'Frans'/,
-                        solution: /def firstSingerWithAFiveLetterName = singers.find { it.name.length() == 5 }/
+                        postCode: /assert singersByCountry['BE'].size() == 2/,
+                        solution: /def singersByCountry = singers.groupBy { it.country }/
                 ),
         ]))
 
@@ -627,7 +635,7 @@ You could also use ' or " quotes to define the string, but / is best because you
                                 code: '''def pattern = ~/\\d/''',
                                 postCode: /assert pattern instanceof java.util.regex.Pattern, "This is the same as Pattern.compile"
 assert pattern.matcher('oliebollenkraam').matches(), "Make a pattern that matches oliebollenkraam"/,
-                                solution: '''def pattern = ~/\\w/''',
+                                solution: '''def pattern = ~/\\w+/''',
                         ),
                         new Koan(name: 'Matcher',
                                 explanation: /With =~ you create a matcher. When it has at least one match, it's truthy/,
@@ -653,6 +661,8 @@ assert 'Ze gelooft in mij' ==~ goodSongRegex/,
         //TODO: use  use(TimeCategory) { field.after(today + 5.year) }
         //TODO: xml  + url.text
         //TODO: AST @Delegate @Singleton @EqualsAndHashCode
+
+        //TODO: spread operator method(*list) http://groovy-lang.org/operators.html#_spread_operator
 
     }
 }
