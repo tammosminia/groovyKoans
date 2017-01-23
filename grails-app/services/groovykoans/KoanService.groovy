@@ -261,7 +261,7 @@ def variable2 = 'bla'/
 
         //TODO: variable length parameters
         addChapter(new Chapter(name: 'Methods',
-                links: [new Link(name: 'Method signatures', url: 'http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures'),
+                links: [new Link(name: 'Method signatures', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_methods_2'),
                     new Link(name: 'variable parameter length', url: 'http://www.javalobby.org/articles/groovy-intro3/')],
                 koans: [
             new Koan(name: 'No return',
