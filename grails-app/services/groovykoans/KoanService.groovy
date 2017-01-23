@@ -134,7 +134,7 @@ List falsy = [0, false, null]/
 
 
         addChapter(new Chapter(name: 'Java',
-                links: [new Link(name: 'Groovy beans', url: 'http://groovy.codehaus.org/Groovy+Beans')],
+                links: [new Link(name: 'Groovy classes', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_class')],
                 koans: [
                 new Koan(name: 'Java beans',
                         explanation: /JavaBeans (or POJOs) are simple Java objects with getters (getX) and setters (setX) for its members./,
