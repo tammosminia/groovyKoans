@@ -81,7 +81,7 @@ Each assignment has a short explanation. (this block)/,
 
                     //TODO: asBoolean method
         addChapter(new Chapter(name: 'Booleans',
-                links: [new Link(name: 'Groovy truth', url: 'http://groovy.codehaus.org/Groovy+Truth')],
+                links: [new Link(name: 'Groovy truth', url: 'http://groovy-lang.org/semantics.html#Groovy-Truth')],
                 koans: [
             new Koan(name: 'Comparing booleans',
                     explanation: '',
@@ -134,7 +134,7 @@ List falsy = [0, false, null]/
 
 
         addChapter(new Chapter(name: 'Java',
-                links: [new Link(name: 'Groovy beans', url: 'http://groovy.codehaus.org/Groovy+Beans')],
+                links: [new Link(name: 'Groovy classes', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_class')],
                 koans: [
                 new Koan(name: 'Java beans',
                         explanation: /JavaBeans (or POJOs) are simple Java objects with getters (getX) and setters (setX) for its members./,
@@ -261,7 +261,7 @@ def variable2 = 'bla'/
 
         //TODO: variable length parameters
         addChapter(new Chapter(name: 'Methods',
-                links: [new Link(name: 'Method signatures', url: 'http://groovy.codehaus.org/Extended+Guide+to+Method+Signatures'),
+                links: [new Link(name: 'Method signatures', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_methods_2'),
                     new Link(name: 'variable parameter length', url: 'http://www.javalobby.org/articles/groovy-intro3/')],
                 koans: [
             new Koan(name: 'No return',
@@ -374,7 +374,7 @@ u komt hier toch weer.
         //TODO: transforming a method into a closure:  def closure = this.&methodName
         //TODO: curry method
         addChapter(new Chapter(name: 'Closures',
-                links: [new Link(name: 'Closures', url: 'http://groovy.codehaus.org/Closures')],
+                links: [new Link(name: 'Closures', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_closures')],
                 koans: [
                 new Koan(name: /Closures/,
                         explanation: /Closures look a lot like methods, because we can pass parameters and we get a return value. But closures are anonymous. A closure is a piece of code that can be assigned to a variable. Later we can execute the code. Since Java 8 Java has lambda expressions which look a lot like Groovy closures./,
@@ -521,7 +521,7 @@ numbers.five = 5/
 
         //TODO: eachWithIndex
         addChapter(new Chapter(name: 'Collection methods',
-                links: [new Link(name: 'Collections', url: 'http://groovy.codehaus.org/Collections')],
+                links: [new Link(name: 'Collections', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_collections_and_arrays')],
                 koans: [
                 new Koan(name: 'Each',
                         explanation: 'Groovy adds a lot of extra methods to the Collection API classes. Each loops through all elements',
@@ -581,7 +581,7 @@ List singers = [
         ]))
 
         addChapter(new Chapter(name: 'Question mark',
-                links: [new Link(name: 'Elvis operator', url: 'http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)'),
+                links: [new Link(name: 'Elvis operator', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_elvis_operator'),
                         new Link(name: 'Explanation by mr Haki', url: 'http://mrhaki.blogspot.nl/2009/08/groovy-goodness-elvis-operator.html')],
                 koans: [
             new Koan(name: '? operator',
@@ -626,7 +626,7 @@ assert lower(null) == null/,
         ]))
 
         addChapter(new Chapter(name: 'Regular expressions',
-                links: [new Link(name: 'Using regular expressions in Groovy', url: 'http://groovy.codehaus.org/Regular+Expressions'),
+                links: [new Link(name: 'Using regular expressions in Groovy', url: 'http://docs.groovy-lang.org/latest/html/documentation/index.html#_regular_expression_operators'),
                         new Link(name: 'Javadoc', url: 'http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html')],
                 koans: [
                         new Koan(name: 'Pattern',

@@ -30,7 +30,7 @@
                 <ul class="list-unstyled">
                     <g:each in="${koan.chapter.links}" var="link">
                         <li>
-                            <g:link url="${link.url}">${link.name}</g:link>
+                            <g:link target="_blank" url="${link.url}">${link.name}</g:link>
                         </li>
                     </g:each>
                 </ul>
